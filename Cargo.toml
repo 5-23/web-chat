@@ -3,8 +3,16 @@ name = "web-chat"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "bin"
+path = "src/main.rs"
+
+
 [lib]
 crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+debug=true
 
 [dependencies]
 actix-files = { version = "0.6", optional = true }
