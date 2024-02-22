@@ -12,12 +12,10 @@ pub fn App() -> impl IntoView {
 
         <Title text="Welcome to Leptos"/>
         <Router>
-            <main>
-                <Routes>
-                    <Route path="" view=pages::Index/>
-                    <Route path="/*" view=pages::NotFound/>
-                </Routes>
-            </main>
+            <Routes>
+                <Route path="" view=pages::Index/>
+                <Route path="/*" view=pages::NotFound/>
+            </Routes>
         </Router>
     }
 }

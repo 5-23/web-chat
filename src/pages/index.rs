@@ -1,14 +1,33 @@
 use leptos::*;
+use leptos_router::ActionForm;
+use crate::components::*;
 #[component]
 pub fn Index() -> impl IntoView {
     // Creates a reactive value to update the button
-    let (count, set_count) = create_signal(0);
+    let (messages, set_messages) = create_signal(vec![("sus", "this is message")]);
 
     view! {
-        <h1>"Welcome to Leptos!"</h1>
-        <button
-            style:color="#000"
-            on:click= move |_| set_count.update(|count| *count += 1)
-        >"Click Me: " {count}</button>
+        <main>
+            <form>
+                <input type="text" placeholder="sus"/>
+                <input type="submit"/>
+            </form>
+
+        <For
+            each=move || messages.get()
+            key=|n| n.clone()
+            let:data
+        >
+            <Message id={data.0} content={data.1}/>
+        </For>
+        
+        </main>
+        
+        <aside>
+            <Channel/>
+            <Channel/>
+            <Channel/>
+            <Channel/>
+        </aside>
     }
 }

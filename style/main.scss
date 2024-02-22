@@ -1,11 +1,73 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	color: #fff;
+	font-family: "Pretendard";
 }
+
+:root {
+	--blue: #4e6dfa;
+}
+
 body {
-	background-color: #0e0527;
+	background-color: #120042;
 	font-family: sans-serif;
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100dvh;
+	padding: 20px;
+	gap: 20px
+}
+
+main {
+	display: flex;
+	flex-direction: column-reverse;
+	background-color: #1d1d1d;
+	width: 100%;
+	height: calc(100% - 66px - 20px);
+	max-width: 600px;
+	padding: 40px;
+	> article {
+		position: relative;
+	}
+}
+
+form {
+	> input {
+		background-color: #111;
+		outline: 0;
+		border: 0;
+		padding: 8px 16px;
+		width: calc(100% - 60px);
+		&[type="submit"] {
+			background-color: var(--blue);
+			width: 60px;
+		}
+	}
+}
+
+aside {
+	display: inline-flex;
+	gap: 12px;
+	background-color: #aaaaaa3d;
+	outline:
+		1px solid #ffffff42,
+		;
+	border-radius: 12px;
+	padding: 8px 12px;
+}
+.message {
+	display: flex;
+}
+.channel {
+	border-radius: 12px;
+	width: 50px;
+	height: 50px;
+	background-color: var(--blue);
 }
