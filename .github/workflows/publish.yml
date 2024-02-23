@@ -13,12 +13,10 @@ jobs:
           targets: "wasm32-unknown-unknown"
       - uses: Swatinem/rust-cache@v2
       - uses: cargo-bins/cargo-binstall@v1.4.9
-      - name: build website
+      - name: setup
         run: |
-          cargo install trunk
-          trunk build --release
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          branch: gh-pages
-          folder: dist
+          rustup update
+          cargo install cargo-leptos --version=0.2.0
+      - name: watch
+        run: |
+          cargo leptos watch
