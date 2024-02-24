@@ -19,4 +19,4 @@ jobs:
           cargo install cargo-leptos --version=0.2.0
       - name: watch
         run: |
-          cargo leptos watch
+          cargo leptos watch --host=0.0.0.0 --port=80
