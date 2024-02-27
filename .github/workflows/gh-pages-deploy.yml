@@ -1,13 +1,15 @@
 name: deploy site
-on: push
-
+on: [push]
+permissions:
+  contents: write
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@nightly
         with:
           targets: "wasm32-unknown-unknown"
