@@ -1,7 +1,5 @@
-name: Release to Github Pages
-on:
-  push:
-    branches: [main]
+name: deploy site
+on: push
 
 jobs:
 
