@@ -50,7 +50,8 @@ pub fn App() -> impl IntoView {
         >
             <Router>
                 <Routes>
-                    <Route path="/" view=Home />
+                <Route path="/" view=Home />
+                <Route path="/home" view=Home />
                     <Route path="/*" view=NotFound />
                 </Routes>
             </Router>
