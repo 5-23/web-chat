@@ -2,7 +2,7 @@ name: deploy site
 on: [push]
 permissions:
   contents: write
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,6 +18,9 @@ jobs:
       - name: setup
         run: |
           rustup update
+          rustup default nightly
+          rustup override set nightly
+          rustup target add wasm32-unknown-unknown
           cargo install trunk
       - name: build website
         run: |
