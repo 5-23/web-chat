@@ -1,15 +1,142 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!-- Add a plain CSS file: see https://trunkrs.dev/assets/#css -->
-    <!-- If using Tailwind with Leptos CSR, see https://trunkrs.dev/assets/#tailwind instead-->
-    <link data-trunk rel="css" rel="stylesheet" href="public/styles.css" />
-
-    <!-- Include favicon in dist output: see https://trunkrs.dev/assets/#icon -->
-    <link data-trunk rel="icon" href="public/favicon.ico" />
-
-    <!-- include support for `wasm-bindgen --weak-refs` - see: https://rustwasm.github.io/docs/wasm-bindgen/reference/weak-references.html -->
-    <link data-trunk rel="rust" data-wasm-opt="z" data-weak-refs />
-  </head>
-  <body></body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main></main>
+    <form action="">
+        <input type="text" id="">
+        <input type="submit" value="">
+    </form>
+</body>
 </html>
+
+<script>
+    const socket = new WebSocket('ws://localhost:3000/ws');
+    const main = document.querySelector('main');
+    // let name = "prompt('name')"
+    let name = prompt('name')
+    socket.addEventListener('open', function (event) {
+        socket.send(JSON.stringify({type: "join", name: name}));
+    });
+
+    socket.addEventListener('message', function (event) {
+        console.log(event.data)
+        let date = JSON.parse(event.data);
+        if (date.type == "messageSend") {
+            main.innerHTML = `
+            <article>
+                <section>${date.name}</section>
+                <section>${date.content}</section>
+            </article>
+            ${main.innerHTML}
+            `;
+        }
+
+        if (date.type == "join") {
+            main.innerHTML = `
+            <article class="join">
+                ----- ${date.name} -----
+            </article>
+            ${main.innerHTML}
+
+            `;
+        }
+    });
+    document.querySelector('form').addEventListener('submit', function(e){
+        e.preventDefault();
+        socket.send(JSON.stringify({
+            type: "messageSend",
+            id: Date.now(),
+            name: name,
+            content: e.target[0].value
+        }));
+        e.target[0].value = '';
+    })
+    // setTimeout(() => {
+    //     socket.send('About done here...');
+    //     console.log("Sending close over websocket");
+    //     socket.close(3000, "Crash and Burn!");
+    // }, 3000);
+</script>
+
+<style>
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+    * {
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        font-family: "pretendard";
+    }
+    body {
+        background-color: #090C2A;
+    }
+
+    form {
+        position: absolute;
+        bottom: 0;
+        width: calc(100vw - 80px);
+        margin: 40px;
+        display: flex;
+        justify-content: space-between;
+        > input {
+            background-color: #1C1A3F;
+            border: 0;
+            outline: 0;
+            height: 60px;
+            padding-left: 10px;
+            &:first-child {
+                border-radius: 8px 0 0 8px;
+                width: calc(100dvw - 80px);
+            }
+            &:last-child {
+                border-radius: 0 8px 8px 0;
+                /* background-color: red; */
+                border-left: solid 1px #ffffff40;
+                width: 69px;
+                background-image: url(img/send.svg);
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: 30px;
+            }
+
+        }
+    }
+
+    main {
+        height: calc(100dvh - 200px);
+        margin: 40px;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 20px;
+        > article {
+            display: flex;
+            gap: 20px;
+            background-color: #1C1A3F;
+            width: fit-content;
+            max-width: 100%;
+            padding: 8px 16px;
+            border-radius: 8px;
+
+            &.join {
+                width: calc(100% - 40px);
+                padding: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+            }
+
+            > section {
+                word-wrap: break-word;
+                word-break: break-all;
+                &:first-child {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+</style>
