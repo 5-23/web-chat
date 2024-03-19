@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Document</title>
 </head>
 <body>
@@ -16,7 +15,7 @@
 </html>
 
 <script>
-    const socket = new WebSocket('ws://localhost:3001/ws');
+    const socket = new WebSocket('ws://118.221.195.32:3001/ws');
     const main = document.querySelector('main');
     let name = null;
     while (!name) {
@@ -120,6 +119,7 @@
     }
 
     main {
+        overflow: scroll;
         height: calc(100dvh - 200px);
         margin: 40px;
         display: flex;

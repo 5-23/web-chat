@@ -17,7 +17,7 @@ wss.on('connection', function connection(ws) {
     if (date.type == 'join') {
       nameFound.push(date.name)
     }
-    ws.send(message.toString());
+    ws.send(message.toString().replace("<script>", ""));
     // 연결된 모든 클라이언트에게 메시지 전송
     clients.forEach(function(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
