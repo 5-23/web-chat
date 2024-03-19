@@ -16,10 +16,12 @@
 </html>
 
 <script>
-    const socket = new WebSocket('ws://118.221.195.32:3001/ws');
+    const socket = new WebSocket('ws://localhost:3001/ws');
     const main = document.querySelector('main');
-    // let name = "prompt('name')"
-    let name = prompt('name')
+    let name = null;
+    while (!name) {
+        name = prompt('name')
+    }
     socket.addEventListener('open', function (event) {
         socket.send(JSON.stringify({type: "join", name: name}));
     });
@@ -40,7 +42,17 @@
         if (date.type == "join") {
             main.innerHTML = `
             <article class="join">
-                ----- ${date.name} -----
+                <b>${date.name}</b> 이(가) 들어옴 
+            </article>
+            ${main.innerHTML}
+
+            `;
+        }
+
+        if (date.type == "exit") {
+            main.innerHTML = `
+            <article class="exit">
+                <b>${date.name}</b> 이(가) 나감
             </article>
             ${main.innerHTML}
 
@@ -126,9 +138,20 @@
                 width: calc(100% - 40px);
                 padding: 24px;
                 display: flex;
+                gap: 8px;
                 align-items: center;
                 justify-content: center;
-                font-weight: 700;
+                
+            }
+
+            &.exit {
+                width: calc(100% - 40px);
+                padding: 24px;
+                gap: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
             }
 
             > section {
