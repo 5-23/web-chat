@@ -8,7 +8,7 @@ const wss = new WebSocket.Server({ port: 3001 });
 // 연결된 모든 클라이언트 저장할 배열
 const clients = [];
 const userInfo = [];
-const channelInfo= {};
+const channelInfo = {};
 
 // 클라이언트 연결 시 이벤트 리스너
 wss.on('connection', function connection(ws) {
@@ -23,10 +23,11 @@ wss.on('connection', function connection(ws) {
       }
       userInfo.push({name: date.name, channel: date.channel});
       channelInfo[date.channel].user += 1;
+      console.log("JOIN", channelInfo)
     }
     clients.forEach(function(client) {
         if (client.readyState === WebSocket.OPEN) {
-          if (date.channel == userInfo[clients.indexOf(client)].channel) {
+          if (userInfo[clients.indexOf(client)] && date.channel == userInfo[clients.indexOf(client)].channel) {
             client.send(message.toString());
           }
         }
@@ -41,12 +42,15 @@ wss.on('connection', function connection(ws) {
     }
     
     clients.forEach(function(client) {
-      if (client.readyState === WebSocket.OPEN && userInfo[clients.indexOf(ws)].channel == userInfo[clients.indexOf(client)].channel) {
+      if (client.readyState === WebSocket.OPEN &&
+        userInfo[clients.indexOf(ws)] && userInfo[clients.indexOf(client)] &&
+        userInfo[clients.indexOf(ws)].channel == userInfo[clients.indexOf(client)].channel) {
           client.send(JSON.stringify({type: "exit", name: userInfo[clients.indexOf(ws)].name, channel: userInfo[clients.indexOf(ws)].channel}));
       }
     });
     userInfo.splice(clients.indexOf(ws), 1);
     clients.splice(clients.indexOf(ws), 1);
+    console.log("EXIT", channelInfo)
   });
 });
 

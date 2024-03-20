@@ -5,6 +5,10 @@ const footer = document.querySelector('footer');
 const channel = location.hash.slice(1);
 
 let name = null;
+while (!name) {
+    name = prompt('이름을 입력해주세요');
+}
+
 document.querySelector('input').addEventListener('input', e => {
     EMOJIS = fetch('/emojis/emojis.json');
     const input = e.target.value;
