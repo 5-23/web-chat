@@ -1,0 +1,134 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-family: "pretendard";
+}
+
+
+:root {
+    --bg: #090C2A;
+    --dark-bg: #1C1A3F;
+    --outline: #ffffff40;
+    --primary: rgb(0, 174, 255);
+}
+
+
+body {
+    background: var(--bg);
+}
+
+footer {
+    border: 0;
+    outline: 0;
+    
+    position: absolute;
+    bottom: 0;
+    width: calc(100dvw - 150px);
+    overflow-x: scroll;
+
+    background: var(--dark-bg);
+    margin: 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 16px;
+    border-radius: 8px 0 0 8px;
+    
+    > p {
+        color: var(--primary)
+    }
+}
+form {
+
+    position: absolute;
+    bottom: 0;
+    width: calc(100vw - 80px);
+    margin: 40px;
+    display: flex;
+    justify-content: space-between;
+    > input {
+        background: var(--dark-bg);
+        border: 0;
+        outline: 0;
+        height: 60px;
+        padding-left: 10px;
+        &:first-child {
+            border-radius: 8px 0 0 8px;
+            width: calc(100dvw - 80px);
+            background: none;
+            color: #ffffff00;
+            font-size: 16px;
+
+            caret-color: red;
+        }
+        &:last-child {
+            border-radius: 0 8px 8px 0;
+            /* background-color: red; */
+            border-left: solid 1px var(--outline);
+            width: 69px;
+            background-image: url(img/send.svg);
+            background-position: 50%;
+            background-repeat: no-repeat;
+            background-size: 30px;
+        }
+    }
+}
+
+main {
+    height: calc(100dvh - 200px);
+    margin: 40px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+    > article {
+        display: flex;
+        gap: 20px;
+        background: var(--dark-bg);
+        width: fit-content;
+        max-width: 100%;
+        padding: 8px 16px;
+        border-radius: 8px;
+
+        &.join {
+            width: calc(100% - 40px);
+            padding: 24px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        &.exit {
+            width: calc(100% - 40px);
+            padding: 24px;
+            gap: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        > section {
+            word-wrap: break-word;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            &:first-child {
+                font-weight: 700;
+            }
+            > img { 
+                width: 20px;
+            }
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
