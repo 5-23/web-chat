@@ -1,19 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <main></main>
-    <footer></footer>
-    <form action="">
-        <input type="text" id="">
-        <input type="submit" value="">
-    </form>
-</body>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+
+    <main>
+      <div class="logo">
+        <img src="/img/logo.svg" alt="Logo" />
+      </div>
+      
+      <div>
+        <p class="explain">코드를 입력하여 들어가기</p>
+      </div>
+      
+      <form
+        style="
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 700px;
+        "
+        onsubmit="location.href='/chat#' + channelValue.value; return false;"
+      >
+        <input
+          class="channelValue"
+          type="text"
+          name="channelName"
+          placeholder="코드를 입력해주세요."
+        />
+      </form>
+      
+      <div class="channels"></div>
+
+    </main>
+  </body>
 </html>
 
-<script src="script.js"></script>
+<script>
+    const channelValue = document.querySelector('.channelValue');
+    const channels = document.querySelector('.channels');
+    function addChannel(channelName, date, cnt) {
+        channels.innerHTML += `
+        <div class="channel" onclick="location.href='/chat#${channelName}'">
+          <p class="channelName">${channelName}</p>
+          <div class="timeAndPeople">
+            <p>${date}s</p>
+            <p>${cnt}명</p>
+          </div>
+        </div>
+    `;
+    }
+    function search(kw) {
+        fetch("http://localhost:3002/channelInfo").then(async res => {
+            res = await res.json()
+            channels.innerHTML = ""
+            for(key in res) {
+                if (key.indexOf(kw) != -1)
+                    addChannel(key, (Number(new Date()) - Number(new Date(res[key].date))) /1000, res[key].user)
+            }
+            if (channels.innerHTML == "") {
+                channels.innerHTML = "<h1>엔터를 눌러 만들기</h1>"
+            }
+                
+        })
+
+    }
+
+    channelValue.addEventListener('input', function() {
+        search(channelValue.value);
+    });
+
+    search("")
+
+</script>

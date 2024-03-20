@@ -1,3 +1,6 @@
 {
-    "stone": "stone.png"
+    "stone": "stone.png",
+    "happy": "happy.svg",
+    "mystery": "mystery.svg",
+    "angry": "angry.svg"
 }
