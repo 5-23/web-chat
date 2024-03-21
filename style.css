@@ -152,13 +152,12 @@ main {
         display: flex;
 
         img {
-            width: 160px;
-            height: 110px;
+            width: 185px;
             border-radius: 10px;
         }
 
         >.cencel>img {
-            margin-left: 150px;
+            margin-left: 100px;
             width: 34px;
             height: 34px;
         }
