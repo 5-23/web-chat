@@ -140,13 +140,31 @@ socket.addEventListener('message', function (event) {
 });
 document.querySelector('form').addEventListener('submit', function (e) {
     e.preventDefault();
-    socket.send(JSON.stringify({
-        type: "messageSend",
-        id: Date.now(),
-        name: name,
-        content: e.target[0].value,
-        channel: channel
-    }));
+    if (e.target[0].value == "/emojis") {
+        EMOJIS = fetch('/emojis/emojis.json');
+        EMOJIS.then(async emojis => {
+            emojis = await emojis.json();
+            res = '<section>:stone:과 같은 식으로 사용하시면 됩니다.</section>';
+            for (emoji in emojis) {
+                res += `<section><img src="/emojis/${emojis[emoji]}" alt="${emoji}" class="emoji"/>${emoji} </section>`;
+            }
+
+            main.innerHTML = `
+            <article class="cmd">
+                ${res}
+            </article>
+            ${main.innerHTML}
+            `;
+        });
+    }else {
+        socket.send(JSON.stringify({
+            type: "messageSend",
+            id: Date.now(),
+            name: name,
+            content: e.target[0].value,
+            channel: channel
+        }));
+    }
     e.target[0].value = '';
     footer.innerHTML = '';
 })

@@ -23,7 +23,7 @@ body {
 footer {
     border: 0;
     outline: 0;
-    
+
     position: absolute;
     bottom: 0;
     width: calc(100dvw - 150px);
@@ -37,11 +37,12 @@ footer {
     padding-left: 10px;
     font-size: 16px;
     border-radius: 8px 0 0 8px;
-    
-    > p {
+
+    >p {
         color: var(--primary)
     }
 }
+
 form {
 
     position: absolute;
@@ -50,12 +51,14 @@ form {
     margin: 40px;
     display: flex;
     justify-content: space-between;
-    > input {
+
+    >input {
         background: var(--dark-bg);
         border: 0;
         outline: 0;
         height: 60px;
         padding-left: 10px;
+
         &:first-child {
             border-radius: 8px 0 0 8px;
             width: calc(100dvw - 80px);
@@ -65,6 +68,7 @@ form {
 
             caret-color: red;
         }
+
         &:last-child {
             border-radius: 0 8px 8px 0;
             /* background-color: red; */
@@ -79,12 +83,14 @@ form {
 }
 
 main {
+    overflow: scroll;
     height: calc(100dvh - 200px);
     margin: 40px;
     display: flex;
     flex-direction: column-reverse;
     gap: 20px;
-    > article {
+
+    >article {
         display: flex;
         gap: 20px;
         background: var(--dark-bg);
@@ -100,30 +106,49 @@ main {
             gap: 8px;
             align-items: center;
             justify-content: center;
-            
+
         }
 
-        &.exit {
+        &.cmd {
             width: calc(100% - 40px);
             padding: 24px;
-            gap: 8px;
             display: flex;
+            gap: 8px;
             align-items: center;
             justify-content: center;
-            
-        }
-
-        > section {
-            word-wrap: break-word;
-            word-break: break-all;
             display: flex;
-            align-items: center;
-            font-size: 16px;
-            &:first-child {
-                font-weight: 700;
+            flex-direction: column;
+
+            >div {
+                >img {
+                    width: 40px;
+                }
             }
-            > img { 
-                width: 20px;
+
+            &.exit {
+                width: calc(100% - 40px);
+                padding: 24px;
+                gap: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+            >section {
+                word-wrap: break-word;
+                word-break: break-all;
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+
+                &:first-child {
+                    font-weight: 700;
+                }
+
+                >img {
+                    width: 20px;
+                }
             }
         }
     }

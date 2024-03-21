@@ -47,7 +47,7 @@
     function addChannel(channelName, date, cnt) {
         channels.innerHTML += `
         <div class="channel" onclick="location.href='/chat#${decodeURI(channelName)}'">
-          <p class="channelName">${channelName}</p>
+          <p class="channelName">${decodeURI(channelName)}</p>
           <div class="timeAndPeople">
             <p>${date}s</p>
             <p>${cnt}명</p>

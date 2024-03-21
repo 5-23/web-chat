@@ -2,5 +2,11 @@
     "stone": "stone.png",
     "happy": "happy.svg",
     "mystery": "mystery.svg",
-    "angry": "angry.svg"
+    "angry": "angry.svg",
+    "good": "good.svg",
+    "interesting": "interesting.svg",
+    "surprised": "surprised.svg",
+    "thinking": "thinking.svg",
+    "tranquility": "tranquility.svg",
+    "trust": "trust.svg"
 }
