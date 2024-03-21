@@ -16,7 +16,14 @@ wss.on('connection', function connection(ws) {
   clients.push(ws);
   // 클라이언트로부터 메시지 수신 시 이벤트 리스너
   ws.on('message', function incoming(message) {
-    date = JSON.parse(message.toString())
+    let msg = message.toString();
+    msg = msg.replaceAll("<", "&lt;");
+    msg = msg.replaceAll(">", "&gt;");
+    msg = msg.replaceAll("\\(", "&#40;")
+    msg = msg.replaceAll("\\)", "&#41;");
+    msg = msg.replaceAll("'", "&#x27;");
+    console.log("MSG", msg)
+    date = JSON.parse(msg)
     if (date.type == 'join') {
       if (!channelInfo[date.channel]) {
         channelInfo[date.channel] = {user: 0, date: new Date()};
@@ -36,8 +43,10 @@ wss.on('connection', function connection(ws) {
 
   // 클라이언트 연결 종료 시 이벤트 리스너
   ws.on('close', function close() {
-    channelInfo[userInfo[clients.indexOf(ws)].channel].user -= 1;
-    if (channelInfo[userInfo[clients.indexOf(ws)].channel].user == 0) {
+    if (userInfo[clients.indexOf(ws)] && userInfo[clients.indexOf(ws)]){
+      channelInfo[userInfo[clients.indexOf(ws)].channel].user -= 1;
+    }
+    if (userInfo[clients.indexOf(ws)] && channelInfo[userInfo[clients.indexOf(ws)].channel].user == 0) {
       delete channelInfo[userInfo[clients.indexOf(ws)].channel];
     }
     

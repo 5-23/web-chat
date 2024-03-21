@@ -11,25 +11,39 @@ while (!name) {
 
 document.querySelector('input').addEventListener('input', e => {
     EMOJIS = fetch('/emojis/emojis.json');
-    const input = e.target.value;
+    input = e.target.value;
+    e.target.value = e.target.value.replaceAll(" ", " ");
+
+    input = input.replaceAll("<", "&lt;");
+    input = input.replaceAll(">", "&gt;");
+    input = input.replaceAll("\\(", "&#40;")
+    input = input.replaceAll("\\)", "&#41;");
+    input = input.replaceAll("'", "&#x27;");
+
     const emojiRegex = /:[a-zA-Z0-9_]+:/g;
 
     const matchedEmojis = input.match(emojiRegex);
 
     if (matchedEmojis) {
-        matchedEmojis.forEach((emoji) => {
-            const emojiName = emoji.slice(1, -1);
-            EMOJIS.then(async emojis => {
-                emojis = await emojis.json();
+        EMOJIS.then(async emojis => {
+            emojis = await emojis.json();
+            matchedEmojis.forEach((emoji) => {
+                const emojiName = emoji.slice(1, -1);
                 const emojiUrl = emojis[emojiName];
-                if (emojiUrl) {
-                    const imgTag = `<p>:${emojiName}:</p>`;
-                    res = e.target.value.replace(emoji, imgTag);
-                    footer.innerHTML = res;
-                }
+
+                    
+                res = e.target.value.replace(/:([a-zA-Z0-9_]+):/g, (match, emojiName) => {
+                    const emojiUrl = emojis[emojiName];
+                    if (emojiUrl) {
+                        return `<p>:${emojiName}:</p>`;
+                    } else {
+                        return match;
+                    }
+                });
+                footer.innerHTML = res;
             });
         });
-    }else {
+    } else {
         footer.innerHTML = input;
     }
 });
@@ -38,44 +52,63 @@ function getEmoji() {
 }
 
 socket.addEventListener('open', function (event) {
-    socket.send(JSON.stringify({type: "join", name: name, channel: channel}));
+    socket.send(JSON.stringify({ type: "join", name: name, channel: channel }));
 });
 
 socket.addEventListener('message', function (event) {
-    let date = JSON.parse(event.data);
+    msg = event.data;
+
+    msg = msg.replaceAll("<", "&lt;");
+    msg = msg.replaceAll(">", "&gt;");
+    msg = msg.replaceAll("\\(", "&#40;")
+    msg = msg.replaceAll("\\)", "&#41;");
+    msg = msg.replaceAll("'", "&#x27;");
+    let date = JSON.parse(msg);
     if (date.type == "messageSend") {
 
         EMOJIS = fetch('/emojis/emojis.json');
-        const input = date.content;
+        input = date.content;
+
+        input = input.replaceAll("<", "&lt;");
+        input = input.replaceAll(">", "&gt;");
+        input = input.replaceAll("\\(", "&#40;")
+        input = input.replaceAll("\\)", "&#41;");
+        input = input.replaceAll("'", "&#x27;");
         const emojiRegex = /:[a-zA-Z0-9_]+:/g;
 
         const matchedEmojis = input.match(emojiRegex);
-        let res = "";
+        let res = date.content;
 
 
         if (matchedEmojis) {
-            matchedEmojis.forEach((emoji) => {
-                const emojiName = emoji.slice(1, -1);
-                EMOJIS.then(async emojis => {
-                    emojis = await emojis.json();
+
+            EMOJIS.then(async emojis => {
+                var emojis = await emojis.json();
+                matchedEmojis.forEach(emoji => {
+                    const emojiName = emoji.slice(1, -1);
                     const emojiUrl = emojis[emojiName];
-                    if (emojiUrl) {
-                        const imgTag = `<img src="/emojis/${emojiUrl}" alt=":${emojiName}:" class="emoji"/>`;
-                        res = date.content.replace(emoji, imgTag);
-                        
-                        main.innerHTML = `
-                        <article>
-                            <section>${date.name}</section>
-                            <section>${res}</section>
-                        </article>
-                        ${main.innerHTML}
-                        `;
-                    }
+
+                    res = res.replace(/:([a-zA-Z0-9_]+):/g, (match, emojiName) => {
+                        const emojiUrl = emojis[emojiName];
+                        if (emojiUrl) {
+                            return `<img src="/emojis/${emojiUrl}" alt="${emojiName}" class="emoji"/>`;
+                        } else {
+                            return match;
+                        }
+                    });
                 });
+
+                main.innerHTML = `
+                <article>
+                    <section>${date.name}</section>
+                    <section>${res}</section>
+                </article>
+                ${main.innerHTML}
+                `;
             });
-        }else {
-            
-        main.innerHTML = `
+        } else {
+
+            main.innerHTML = `
         <article>
             <section>${date.name}</section>
             <section>${input}</section>
@@ -86,6 +119,7 @@ socket.addEventListener('message', function (event) {
     }
 
     if (date.type == "join") {
+
         main.innerHTML = `
         <article class="join">
             <b>${date.name}</b> 이(가) 들어옴 
@@ -104,7 +138,7 @@ socket.addEventListener('message', function (event) {
         `;
     }
 });
-document.querySelector('form').addEventListener('submit', function(e){
+document.querySelector('form').addEventListener('submit', function (e) {
     e.preventDefault();
     socket.send(JSON.stringify({
         type: "messageSend",

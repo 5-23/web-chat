@@ -46,7 +46,7 @@
     const channels = document.querySelector('.channels');
     function addChannel(channelName, date, cnt) {
         channels.innerHTML += `
-        <div class="channel" onclick="location.href='/chat#${channelName}'">
+        <div class="channel" onclick="location.href='/chat#${decodeURI(channelName)}'">
           <p class="channelName">${channelName}</p>
           <div class="timeAndPeople">
             <p>${date}s</p>
