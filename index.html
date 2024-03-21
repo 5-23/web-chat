@@ -72,16 +72,14 @@
 </html>
 
 <script>
-<<<<<<< Updated upstream
-    const channelValue = document.querySelector('.channelValue');
-    const channels = document.querySelector('.channels');
-    function addChannel(channelName, date, cnt) {
-        channels.innerHTML += `
-        <div class="channel" onclick="location.href='/chat#${decodeURI(channelName)}'">
-          <p class="channelName">${decodeURI(channelName)}</p>
-=======
   const channelValue = document.querySelector(".channelValue");
   const channels = document.querySelector(".channels");
+  // function addChannel(channelName, date, cnt) {
+  //     channels.innerHTML += `
+  //     <div class="channel" onclick="location.href='/chat#${decodeURI(channelName)}'">
+  //       <p class="channelName">${decodeURI(channelName)}</p>
+  // const channelValue = document.querySelector(".channelValue");
+  // const channels = document.querySelector(".channels");
   // const SettingBk = document.querySelector(".setting");
   const settingBK = document.querySelector(".setting");
   const popup = document.querySelector(".popup");
@@ -116,17 +114,16 @@
 
   function addChannel(channelName, date, cnt) {
     channels.innerHTML += `
-        <div class="channel" onclick="location.href='/chat#${decodeURI(
-          channelName
-        )}'">
-          <p class="channelName">${channelName}</p>
->>>>>>> Stashed changes
-          <div class="timeAndPeople">
-            <p>${date}s</p>
-            <p>${cnt}명</p>
+          <div class="channel" onclick="location.href='/chat#${decodeURI(
+            channelName
+          )}'">
+            <p class="channelName">${channelName}</p>
+            <div class="timeAndPeople">
+              <p>${date}s</p>
+              <p>${cnt}명</p>
+            </div>
           </div>
-        </div>
-    `;
+      `;
   }
   function search(kw) {
     fetch("http://localhost:3002/channelInfo").then(async (res) => {
