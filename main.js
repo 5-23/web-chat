@@ -1,6 +1,7 @@
-const WebSocket = require('ws');
-const express = require('express'); const app = express();
-var cors = require('cors')
+const WebSocket = require("ws");
+const express = require("express");
+const app = express();
+var cors = require("cors");
 
 // WebSocket 서버 생성
 const wss = new WebSocket.Server({ port: 3001 });
@@ -11,71 +12,88 @@ const userInfo = [];
 const channelInfo = {};
 
 // 클라이언트 연결 시 이벤트 리스너
-wss.on('connection', function connection(ws) {
+wss.on("connection", function connection(ws) {
   // 연결된 클라이언트를 배열에 추가
   clients.push(ws);
   // 클라이언트로부터 메시지 수신 시 이벤트 리스너
-  ws.on('message', function incoming(message) {
+  ws.on("message", function incoming(message) {
     let msg = message.toString();
     msg = msg.replaceAll("<", "&lt;");
     msg = msg.replaceAll(">", "&gt;");
-    msg = msg.replaceAll("\\(", "&#40;")
+    msg = msg.replaceAll("\\(", "&#40;");
     msg = msg.replaceAll("\\)", "&#41;");
     msg = msg.replaceAll("'", "&#x27;");
-    console.log("MSG", msg)
-    date = JSON.parse(msg)
-    if (date.type == 'join') {
+    console.log("MSG", msg);
+    date = JSON.parse(msg);
+    if (date.type == "join") {
       if (!channelInfo[date.channel]) {
-        channelInfo[date.channel] = {user: 0, date: new Date()};
+        channelInfo[date.channel] = { user: 0, date: new Date() };
       }
-      userInfo.push({name: date.name, channel: date.channel});
+      userInfo.push({ name: date.name, channel: date.channel });
       channelInfo[date.channel].user += 1;
-      console.log("JOIN", channelInfo)
+      console.log("JOIN", channelInfo);
     }
-    clients.forEach(function(client) {
-        if (client.readyState === WebSocket.OPEN) {
-          if (userInfo[clients.indexOf(client)] && date.channel == userInfo[clients.indexOf(client)].channel) {
-            client.send(message.toString());
-          }
+    clients.forEach(function (client) {
+      if (client.readyState === WebSocket.OPEN) {
+        if (
+          userInfo[clients.indexOf(client)] &&
+          date.channel == userInfo[clients.indexOf(client)].channel
+        ) {
+          client.send(message.toString());
         }
+      }
     });
   });
 
   // 클라이언트 연결 종료 시 이벤트 리스너
-  ws.on('close', function close() {
-    if (userInfo[clients.indexOf(ws)] && userInfo[clients.indexOf(ws)]){
+  ws.on("close", function close() {
+    if (userInfo[clients.indexOf(ws)] && userInfo[clients.indexOf(ws)]) {
       channelInfo[userInfo[clients.indexOf(ws)].channel].user -= 1;
     }
-    if (userInfo[clients.indexOf(ws)] && channelInfo[userInfo[clients.indexOf(ws)].channel].user == 0) {
+    if (
+      userInfo[clients.indexOf(ws)] &&
+      channelInfo[userInfo[clients.indexOf(ws)].channel].user == 0
+    ) {
       delete channelInfo[userInfo[clients.indexOf(ws)].channel];
     }
-    
-    clients.forEach(function(client) {
-      if (client.readyState === WebSocket.OPEN &&
-        userInfo[clients.indexOf(ws)] && userInfo[clients.indexOf(client)] &&
-        userInfo[clients.indexOf(ws)].channel == userInfo[clients.indexOf(client)].channel) {
-          client.send(JSON.stringify({type: "exit", name: userInfo[clients.indexOf(ws)].name, channel: userInfo[clients.indexOf(ws)].channel}));
+
+    clients.forEach(function (client) {
+      if (
+        client.readyState === WebSocket.OPEN &&
+        userInfo[clients.indexOf(ws)] &&
+        userInfo[clients.indexOf(client)] &&
+        userInfo[clients.indexOf(ws)].channel ==
+          userInfo[clients.indexOf(client)].channel
+      ) {
+        client.send(
+          JSON.stringify({
+            type: "exit",
+            name: userInfo[clients.indexOf(ws)].name,
+            channel: userInfo[clients.indexOf(ws)].channel,
+          })
+        );
       }
     });
     userInfo.splice(clients.indexOf(ws), 1);
     clients.splice(clients.indexOf(ws), 1);
-    console.log("EXIT", channelInfo)
+    console.log("EXIT", channelInfo);
   });
 });
 
-
 var corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
-
-app.get('/channelInfo', cors(corsOptions), (req, res) => { res.json(channelInfo); });
+app.get("/channelInfo", cors(corsOptions), (req, res) => {
+  res.json(channelInfo);
+});
 
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
-
-app.listen(3002, () => { console.log('Server is running on port 3002'); });
+app.listen(3002, () => {
+  console.log("Server is running on port 3002");
+});

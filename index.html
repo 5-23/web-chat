@@ -7,16 +7,20 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-
+    <header>
+      <div class="setting" onclick="changeColor()">
+        <img src="./img/Settings.svg" />
+      </div>
+    </header>
     <main>
       <div class="logo">
         <img src="/img/logo.svg" alt="Logo" />
       </div>
-      
+
       <div>
         <p class="explain">코드를 입력하여 들어가기</p>
       </div>
-      
+
       <form
         style="
           width: 100%;
@@ -34,47 +38,117 @@
           placeholder="코드를 입력해주세요."
         />
       </form>
-      
-      <div class="channels"></div>
 
+      <div class="channels"></div>
     </main>
+
+    <div class="popup-bg"></div>
+    <div class="popup">
+      <div class="pop">
+        <div class="backgroundEx">
+          <img src="./img/dark.png" />
+          <p>dark</p>
+        </div>
+        <div class="backgroundEx">
+          <img src="./img/pink.png" />
+          <p>pink</p>
+        </div>
+        <div class="backgroundEx">
+          <img src="./img/blue.webp" />
+          <p>blue</p>
+        </div>
+        <div class="cencel">
+          <img src="./img/cencel.svg" />
+        </div>
+      </div>
+      <div class="colorChange">
+        <p>background: <input type="text" class="background" /></p>
+        <p>dark-background: <input type="text" class="dark-background" /></p>
+        <p>outline: <input type="text" class="outline" /></p>
+        <p>primary: <input type="text" class="primary" /></p>
+      </div>
+    </div>
   </body>
 </html>
 
 <script>
+<<<<<<< Updated upstream
     const channelValue = document.querySelector('.channelValue');
     const channels = document.querySelector('.channels');
     function addChannel(channelName, date, cnt) {
         channels.innerHTML += `
         <div class="channel" onclick="location.href='/chat#${decodeURI(channelName)}'">
           <p class="channelName">${decodeURI(channelName)}</p>
+=======
+  const channelValue = document.querySelector(".channelValue");
+  const channels = document.querySelector(".channels");
+  // const SettingBk = document.querySelector(".setting");
+  const settingBK = document.querySelector(".setting");
+  const popup = document.querySelector(".popup");
+  const popupbg = document.querySelector(".popup-bg");
+  const cencel = document.querySelector(".cencel");
+
+  function changeColor() {
+    popup.style.display = "block";
+    popupbg.style.display = "block";
+    popupbg.style.display = "block";
+  }
+
+  popupbg.addEventListener("click", () => {
+    popup.style.display = "none";
+    popupbg.style.display = "none";
+    popupbg.style.display = "none";
+  });
+
+  cencel.addEventListener("click", () => {
+    popup.style.display = "none";
+    popupbg.style.display = "none";
+    popupbg.style.display = "none";
+  });
+
+  // var setCookie = function (SettingBk) {
+  //   var date = new Date();
+  //   date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
+  //   document.cookie = bk;
+  // };
+
+  // setCookie();
+
+  function addChannel(channelName, date, cnt) {
+    channels.innerHTML += `
+        <div class="channel" onclick="location.href='/chat#${decodeURI(
+          channelName
+        )}'">
+          <p class="channelName">${channelName}</p>
+>>>>>>> Stashed changes
           <div class="timeAndPeople">
             <p>${date}s</p>
             <p>${cnt}명</p>
           </div>
         </div>
     `;
-    }
-    function search(kw) {
-        fetch("http://localhost:3002/channelInfo").then(async res => {
-            res = await res.json()
-            channels.innerHTML = ""
-            for(key in res) {
-                if (key.indexOf(kw) != -1)
-                    addChannel(key, (Number(new Date()) - Number(new Date(res[key].date))) /1000, res[key].user)
-            }
-            if (channels.innerHTML == "") {
-                channels.innerHTML = "<h1>엔터를 눌러 만들기</h1>"
-            }
-                
-        })
-
-    }
-
-    channelValue.addEventListener('input', function() {
-        search(channelValue.value);
+  }
+  function search(kw) {
+    fetch("http://localhost:3002/channelInfo").then(async (res) => {
+      res = await res.json();
+      channels.innerHTML = "";
+      for (key in res) {
+        if (key.indexOf(kw) != -1)
+          addChannel(
+            key,
+            (Number(new Date()) - Number(new Date(res[key].date))) / 1000,
+            res[key].user
+          );
+      }
+      if (channels.innerHTML == "") {
+        channels.innerHTML = "<h1>엔터를 눌러 만들기</h1>";
+      }
     });
+  }
 
-    search("")
+  channelValue.addEventListener("input", function () {
+    search(channelValue.value);
+  });
 
+  search("");
 </script>

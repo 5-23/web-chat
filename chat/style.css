@@ -7,14 +7,12 @@
     font-family: "pretendard";
 }
 
-
 :root {
     --bg: #090C2A;
     --dark-bg: #1C1A3F;
     --outline: #ffffff40;
-    --primary: rgb(0, 174, 255);
+    --primary: #00b4be;
 }
-
 
 body {
     background: var(--bg);
@@ -109,6 +107,7 @@ main {
             align-items: center;
             justify-content: center;
 
+<<<<<<< Updated upstream
         }
 
         &.cmd {
@@ -120,6 +119,8 @@ main {
             justify-content: center;
             display: flex;
             flex-direction: column;
+=======
+>>>>>>> Stashed changes
         }
 
         &.exit {
