@@ -92,6 +92,8 @@ main {
 
     >article {
         display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 20px;
         background: var(--dark-bg);
         width: fit-content;
@@ -118,40 +120,35 @@ main {
             justify-content: center;
             display: flex;
             flex-direction: column;
+        }
 
-            >div {
-                >img {
-                    width: 40px;
-                }
+        &.exit {
+            width: calc(100% - 40px);
+            padding: 24px;
+            gap: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        >section {
+            word-wrap: break-word;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+
+            &:first-child {
+                font-weight: 700;
             }
 
-            &.exit {
-                width: calc(100% - 40px);
-                padding: 24px;
-                gap: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-            }
-
-            >section {
-                word-wrap: break-word;
-                word-break: break-all;
-                display: flex;
-                align-items: center;
-                font-size: 16px;
-
-                &:first-child {
-                    font-weight: 700;
-                }
-
-                >img {
-                    width: 20px;
-                }
+            >img {
+                width: 20px;
             }
         }
     }
+
 }
 
 ::-webkit-scrollbar {
