@@ -151,8 +151,8 @@ main {
         justify-content: space-around;
         display: flex;
 
-        img {
-            width: 185px;
+         img {
+            width: 160px;
             border-radius: 10px;
         }
 
@@ -162,7 +162,9 @@ main {
             height: 34px;
         }
 
-        >.backgroundEx {
+        >.themes {
+            display: flex;
+            gap: 20px;
             >p {
                 text-align: center;
             }
@@ -177,6 +179,7 @@ main {
         border-radius: 10px;
         height: 180px;
         padding: 20px;
+        font-size: 20px !important;
 
         >p {
             margin-bottom: 4px;

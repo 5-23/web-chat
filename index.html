@@ -45,17 +45,10 @@
     <div class="popup-bg"></div>
     <div class="popup">
       <div class="pop">
-        <div class="backgroundEx">
-          <img src="./img/dark.png" />
-          <p>dark</p>
-        </div>
-        <div class="backgroundEx">
-          <img src="./img/pink.png" />
-          <p>pink</p>
-        </div>
-        <div class="backgroundEx">
-          <img src="./img/blue.webp" />
-          <p>blue</p>
+        <div class="themes">
+          <img src="./img/theme/dark.png" />
+          <img src="./img/theme/pink.png" />
+          <img src="./img/theme/blue.png" />
         </div>
         <div class="cencel">
           <img src="./img/cencel.svg" />
@@ -117,7 +110,7 @@
           <div class="channel" onclick="location.href='/chat#${decodeURI(
             channelName
           )}'">
-            <p class="channelName">${channelName}</p>
+            <p class="channelName">${decodeURI(channelName)}</p>
             <div class="timeAndPeople">
               <p>${date}s</p>
               <p>${cnt}명</p>
