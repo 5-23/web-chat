@@ -1,5 +1,4 @@
-
-const socket = new WebSocket('ws://localhost:3001/ws');
+const socket = new WebSocket('wss://chat.5-23.dev/chatWS');
 const main = document.querySelector('main');
 const footer = document.querySelector('footer');
 const channel = location.hash.slice(1);

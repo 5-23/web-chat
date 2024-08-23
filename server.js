@@ -4,7 +4,7 @@ const app = express();
 var cors = require("cors");
 
 // WebSocket 서버 생성
-const wss = new WebSocket.Server({ port: 3001 });
+const wss = new WebSocket.Server({ port: 3142 });
 
 // 연결된 모든 클라이언트 저장할 배열
 const clients = [];
@@ -94,6 +94,6 @@ app.get("/channelInfo", cors(corsOptions), (req, res) => {
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //   next();
 // });
-app.listen(3002, () => {
-  console.log("Server is running on port 3002");
+app.listen(3141, () => {
+  console.log("Server is running on port 3142");
 });

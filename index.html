@@ -119,7 +119,7 @@
       `;
   }
   function search(kw) {
-    fetch("http://localhost:3002/channelInfo").then(async (res) => {
+    fetch("https://chat.5-23.dev/channelInfo").then(async (res) => {
       res = await res.json();
       channels.innerHTML = "";
       for (key in res) {
